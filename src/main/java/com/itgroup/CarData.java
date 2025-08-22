@@ -78,7 +78,7 @@ public class CarData {
         bean.setFuelEfficiency(fuel_efficiency);
         bean.setPrice(price);
 
-        arr = cdao.newArrivals(bean);
+
 
 
     }
