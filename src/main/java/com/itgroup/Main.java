@@ -19,11 +19,13 @@ public class Main {
                     data.selectAll();
                     break;
                 case 1:
-                    data.newArrivals();
+                    data.newCar();
                     break;
                 case 2:
+                    data.soldCar();
                     break;
                 case 3:
+                    data.totalCar();
                     break;
                 case 4:
                     break;

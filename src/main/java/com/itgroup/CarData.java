@@ -11,21 +11,18 @@ public class CarData {
     private CarDao cdao = null;
     private Scanner scan = null;
 
-    public CarData(){
+    public CarData() {
         this.cdao = new CarDao();
         this.scan = new Scanner(System.in);
 
     }
 
 
-
-
-
     public void selectAll() {
         List<Car> cars = cdao.selectAll();
         System.out.println("차량\t정보\t시스템");
         System.out.println("번호\t브랜드\t모델\t출시날짜\t색상");
-        for(Car bean : cars) {
+        for (Car bean : cars) {
             int car_no = bean.getCarNumber();
             String brand = bean.getBrand();
             String car_model = bean.getCarModel();
@@ -37,9 +34,9 @@ public class CarData {
 
     }
 
-    public void newArrivals() {
+    public void newCar() {
         Car bean = new Car();
-        int arr = -1;
+        int cnt = -1;
 
         System.out.println("차량번호 입력 : ");
         int car_no = scan.nextInt();
@@ -78,8 +75,34 @@ public class CarData {
         bean.setFuelEfficiency(fuel_efficiency);
         bean.setPrice(price);
 
+        cnt = cdao.newCar(bean);
+
+        if (cnt == -1) {
+            System.out.println("이미 등록된 차량입니다.");
+        } else if (cnt == 1) {
+            System.out.println(car_no + "번 차량이 등록되었습니다.");
+        } else {
 
 
+        }
+    }
 
+    public void soldCar() {
+        int car_no = 1006 ;
+        int cnt = -1 ;
+        cnt = cdao.soldCar(car_no);
+
+        if (cnt == 0){
+            System.out.println("이미 판매완료된 차량입니다.");
+
+        }else if(cnt > 0){
+            System.out.println("차량 판매가 완료 되었습니다.");
+        }else {
+
+        }
+
+    }
+
+    public void totalCar() {
     }
 }
