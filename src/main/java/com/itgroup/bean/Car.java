@@ -10,20 +10,8 @@ public class Car {
     private String engine_type ;
     private int fuel_efficiency ;
     private int price ;
-
-    public Car(){}
-
-    public Car(int car_no, String brand, String car_model, String release_date, String color, String car_type, String engine_type, int fuel_efficiency, int price) {
-        this.car_no = car_no;
-        this.brand = brand;
-        this.car_model = car_model;
-        this.release_date = release_date;
-        this.color = color;
-        this.car_type = car_type;
-        this.engine_type = engine_type;
-        this.fuel_efficiency = fuel_efficiency;
-        this.price = price;
-    }
+    private int maxprice ;
+    private int lowprice ;
 
     @Override
     public String toString() {
@@ -37,7 +25,44 @@ public class Car {
                 ", engine_type='" + engine_type + '\'' +
                 ", fuel_efficiency=" + fuel_efficiency +
                 ", price=" + price +
+                ", maxprice=" + maxprice +
+                ", lowprice=" + lowprice +
                 '}';
+    }
+
+    public int getMaxprice() {
+        return maxprice;
+    }
+
+    public void setMaxprice(int maxprice) {
+        this.maxprice = maxprice;
+    }
+
+    public int getLowprice() {
+        return lowprice;
+    }
+
+    public void setLowprice(int lowprice) {
+        this.lowprice = lowprice;
+    }
+
+    public Car(int maxprice, int lowprice) {
+        this.maxprice = maxprice;
+        this.lowprice = lowprice;
+    }
+
+    public Car(){}
+
+    public Car(int car_no, String brand, String car_model, String release_date, String color, String car_type, String engine_type, int fuel_efficiency, int price) {
+        this.car_no = car_no;
+        this.brand = brand;
+        this.car_model = car_model;
+        this.release_date = release_date;
+        this.color = color;
+        this.car_type = car_type;
+        this.engine_type = engine_type;
+        this.fuel_efficiency = fuel_efficiency;
+        this.price = price;
     }
 
     public int getCarNumber() {

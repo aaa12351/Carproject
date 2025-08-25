@@ -139,5 +139,126 @@ public class CarDao extends SuperDao {
         }
         return cnt;
     }
+
+    public int totalCar() {
+        String sql = "select count(*) as totalCar from cars";
+        PreparedStatement pstmt = null;
+        Connection conn = null;
+        ResultSet rs = null;
+        int cnt = 0;
+        try {
+            conn = super.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                cnt = rs.getInt("totalCar");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        return cnt;
+    }
+
+    public List<Car> highLowPrice() {
+        List<Car> priceList = new ArrayList<Car>();
+        String sql = "select max(price) as highest_price, min(price) as lowest_price from cars";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = super.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                Car bean = new Car();
+
+                bean.setMaxprice(rs.getInt("highest_price"));
+                bean.setLowprice(rs.getInt("lowest_price"));
+
+                priceList.add(bean);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            return priceList;
+        }
+    }
+
+    public List<Car> carYear(int car_no) {
+        List<Car> date = new ArrayList<Car>();
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        String sql = "select car_no, release_date from cars where car_no = ? ";
+
+        try {
+            conn = super.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, car_no);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Car bean = new Car();
+                bean.setCarNumber(rs.getInt("car_no"));
+                bean.setReleaseDate(rs.getString("release_date"));
+
+                date.add(bean);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            return date;
+        }
+    }
+
+    public int updataCar(Car bean) {
+
+    }
 }
 
