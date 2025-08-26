@@ -197,8 +197,8 @@ public class CarData {
     }
 
 
-    public void avgfe() {
-        List<Car> avgfeList = cdao.avgfe();
+    public void avgFe() {
+        List<Car> avgfeList = cdao.avgFe();
 
         System.out.println("평균 연비");
         for (Car bean : avgfeList){

@@ -302,7 +302,7 @@ public class CarDao extends SuperDao {
         return cnt ;
     }
 
-    public List<Car> avgfe() {
+    public List<Car> avgFe() {
         List<Car> avgfeList = new ArrayList<>();
         String sql = "select avg(fuel_efficiency) as avg_fe from cars " ;
         Connection conn = null ;
