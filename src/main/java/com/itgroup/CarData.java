@@ -21,14 +21,14 @@ public class CarData {
     public void selectAll() {
         List<Car> cars = cdao.selectAll();
         System.out.println("차량\t정보\t시스템");
-        System.out.println("번호\t브랜드\t모델\t출시날짜\t색상");
+        System.out.println("번호\t\t브랜드\t모델\t\t\t출시날짜\t\t\t색상");
         for (Car bean : cars) {
             int car_no = bean.getCarNumber();
             String brand = bean.getBrand();
             String car_model = bean.getCarModel();
             String release_date = bean.getReleaseDate();
             String color = bean.getColor();
-            String message = car_no + "\t" + brand + "\t" + car_model + "\t" + release_date + "\t" + color;
+            String message = car_no + "\t" + brand + "\t\t" + car_model + "\t\t" + release_date + "\t\t" + color;
             System.out.println(message);
         }
 
@@ -144,7 +144,7 @@ public class CarData {
         }
     }
 
-    public void updataCar() {
+    public void updateCar() {
         int cnt = -1;
 
         System.out.println("수정하고자 하는 차량 번호 입력 : ");
@@ -186,13 +186,26 @@ public class CarData {
         bean.setFuelEfficiency(fuel_efficiency);
         bean.setPrice(price);
 
-        cnt = cdao.updataCar(bean);
+        cnt = cdao.updateCar(bean);
 
         if (cnt == -1) {
             System.out.println("업데이트 실패");
         } else if (cnt == 1) {
             System.out.println("업데이트 성공");
         } else {
+        }
+    }
+
+
+    public void avgfe() {
+        List<Car> avgfeList = cdao.avgfe();
+
+        System.out.println("평균 연비");
+        for (Car bean : avgfeList){
+            int fe = bean.getFuelEfficiency();
+            int fuel_efficiency = bean.getFuelEfficiency();
+            String message = "보유 중인 차량 평균 연비는 " + "\t" + fuel_efficiency + "입니다.";
+            System.out.println(message);
         }
     }
 }

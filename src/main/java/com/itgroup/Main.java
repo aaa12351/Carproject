@@ -11,7 +11,7 @@ public class Main {
 
         while(true){
             System.out.println("\n차량\t정보\t시스템");
-            System.out.println("0:차량목록조회, 1:새로들어온 차량, 2:판매완료된 차량, 3:총차량댓수, 4:최고가/최저가 차량 조회, 5:차량 출시일 조회, 6:차량 정보 수정, 7: 평균 연비, 8:종료");
+            System.out.println("0:차량목록조회, 1:새로들어온 차량, 2:판매완료된 차량, 3:총차량댓수, 4:최고가/최저가 차량 조회, 5:차량 출시일 조회, 6:차량 정보 수정, 7:평균 연비, 8:종료");
 
             int menu = scan.nextInt() ;
             switch(menu){
@@ -36,9 +36,10 @@ public class Main {
                     data.carYear(car_no);
                     break;
                 case 6:
-                    data.updataCar();
+                    data.updateCar();
                     break;
                 case 7:
+                    data.avgfe();
                     break;
                 case 8:
                     System.out.println("차량 목록 시스템을 종료합니다.");

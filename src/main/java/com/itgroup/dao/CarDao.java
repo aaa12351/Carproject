@@ -257,8 +257,76 @@ public class CarDao extends SuperDao {
         }
     }
 
-    public int updataCar(Car bean) {
+    public int updateCar(Car bean) {
+        int cnt = -1 ;
 
+        String sql = " update cars set brand = ?, car_model = ?, release_date = ?, color = ?, car_type = ?, engine_type = ?, fuel_efficiency = ?, price = ? where car_no = ? ";
+
+        Connection conn = null ;
+        PreparedStatement pstmt = null ;
+
+        try {
+            conn = super.getConnection();
+            pstmt = conn.prepareStatement(sql);
+
+            pstmt.setString(1, bean.getBrand());
+            pstmt.setString(2,bean.getCarModel());
+            pstmt.setString(3,bean.getReleaseDate());
+            pstmt.setString(4,bean.getColor());
+            pstmt.setString(5,bean.getCarType());
+            pstmt.setString(6,bean.getEngineType());
+            pstmt.setInt(7,bean.getFuelEfficiency());
+            pstmt.setInt(8,bean.getPrice());
+            pstmt.setInt(9,bean.getCarNumber());
+            cnt = pstmt.executeUpdate();
+            conn.commit();
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }try {
+            if (conn != null) conn.rollback();
+        }catch (Exception e2) {
+            e2.printStackTrace();
+        }finally {
+            try {
+                if(pstmt != null){pstmt.close();}
+                if(conn != null){conn.close();}
+
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+
+        }
+        return cnt ;
+    }
+
+    public List<Car> avgfe() {
+        List<Car> avgfeList = new ArrayList<>();
+        String sql = "select avg(fuel_efficiency) as avg_fe from cars " ;
+        Connection conn = null ;
+        PreparedStatement pstmt = null ;
+        ResultSet rs = null ;
+
+        try {
+            conn = super.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            rs= pstmt.executeQuery();
+
+            if(rs.next()){
+                Car bean = new Car();
+
+                bean.setFuelEfficiency(rs.getInt("avg_fe"));
+
+                avgfeList.add(bean);
+
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return avgfeList;
     }
 }
 
