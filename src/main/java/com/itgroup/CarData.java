@@ -3,6 +3,7 @@ package com.itgroup;
 import com.itgroup.bean.Car;
 import com.itgroup.dao.CarDao;
 
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -65,6 +66,9 @@ public class CarData {
         System.out.println("차량 가격 입력 : ");
         int price = scan.nextInt();
 
+        System.out.println("판매 중인 지점 : ");
+        String office = scan.next();
+
         bean.setCarNumber(car_no);
         bean.setBrand(brand);
         bean.setCarModel(car_model);
@@ -74,6 +78,7 @@ public class CarData {
         bean.setEngineType(engine_type);
         bean.setFuelEfficiency(fuel_efficiency);
         bean.setPrice(price);
+        bean.setOffice(office);
 
         cnt = cdao.newCar(bean);
 
@@ -88,7 +93,7 @@ public class CarData {
     }
 
     public void soldCar() {
-        int car_no = 1005;
+        int car_no = 1006;
         int cnt = -1;
         cnt = cdao.soldCar(car_no);
 
@@ -176,6 +181,9 @@ public class CarData {
         System.out.println("차량 가격 입력 : ");
         int price = scan.nextInt();
 
+        System.out.println("판매중인 지점 입력 : ");
+        String office = scan.next();
+
         bean.setCarNumber(car_no);
         bean.setBrand(brand);
         bean.setCarModel(car_model);
@@ -185,6 +193,7 @@ public class CarData {
         bean.setEngineType(engine_type);
         bean.setFuelEfficiency(fuel_efficiency);
         bean.setPrice(price);
+        bean.setOffice(office);
 
         cnt = cdao.updateCar(bean);
 
@@ -208,5 +217,23 @@ public class CarData {
             System.out.println(message);
         }
     }
+
+
+    public void dealerCar() {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("지점별 차량 현황(서울,원주,대전,부산)");
+        String office = scan.next();
+        List<Car> officedata = cdao.dealerCar(office);
+        int cnt = officedata.size();
+
+        if(cnt == 0) {
+            System.out.println(office + "지점은 존재하지 않습니다.");
+        }else{
+            System.out.println(office + "지점은 현재 " + cnt + "대의 차량이 있습니다.");
+
+        }
+    }
 }
+
 

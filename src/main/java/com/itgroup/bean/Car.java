@@ -12,6 +12,8 @@ public class Car {
     private int price ;
     private int maxprice ;
     private int lowprice ;
+    private String office ;
+
 
     @Override
     public String toString() {
@@ -27,8 +29,22 @@ public class Car {
                 ", price=" + price +
                 ", maxprice=" + maxprice +
                 ", lowprice=" + lowprice +
+                ", office='" + office + '\'' +
                 '}';
     }
+
+    public String getOffice() {
+        return office;
+    }
+
+    public void setOffice(String office) {
+        this.office = office;
+    }
+
+    public Car(String office) {
+        this.office = office;
+    }
+
 
     public int getMaxprice() {
         return maxprice;

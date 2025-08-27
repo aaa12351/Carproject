@@ -258,63 +258,68 @@ public class CarDao extends SuperDao {
     }
 
     public int updateCar(Car bean) {
-        int cnt = -1 ;
+        int cnt = -1;
 
         String sql = " update cars set brand = ?, car_model = ?, release_date = ?, color = ?, car_type = ?, engine_type = ?, fuel_efficiency = ?, price = ? where car_no = ? ";
 
-        Connection conn = null ;
-        PreparedStatement pstmt = null ;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
 
         try {
             conn = super.getConnection();
             pstmt = conn.prepareStatement(sql);
 
             pstmt.setString(1, bean.getBrand());
-            pstmt.setString(2,bean.getCarModel());
-            pstmt.setString(3,bean.getReleaseDate());
-            pstmt.setString(4,bean.getColor());
-            pstmt.setString(5,bean.getCarType());
-            pstmt.setString(6,bean.getEngineType());
-            pstmt.setInt(7,bean.getFuelEfficiency());
-            pstmt.setInt(8,bean.getPrice());
-            pstmt.setInt(9,bean.getCarNumber());
+            pstmt.setString(2, bean.getCarModel());
+            pstmt.setString(3, bean.getReleaseDate());
+            pstmt.setString(4, bean.getColor());
+            pstmt.setString(5, bean.getCarType());
+            pstmt.setString(6, bean.getEngineType());
+            pstmt.setInt(7, bean.getFuelEfficiency());
+            pstmt.setInt(8, bean.getPrice());
+            pstmt.setInt(9, bean.getCarNumber());
             cnt = pstmt.executeUpdate();
             conn.commit();
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        }try {
+        }
+        try {
             if (conn != null) conn.rollback();
-        }catch (Exception e2) {
+        } catch (Exception e2) {
             e2.printStackTrace();
-        }finally {
+        } finally {
             try {
-                if(pstmt != null){pstmt.close();}
-                if(conn != null){conn.close();}
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
 
 
-            }catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
 
         }
-        return cnt ;
+        return cnt;
     }
 
     public List<Car> avgFe() {
         List<Car> avgfeList = new ArrayList<>();
-        String sql = "select avg(fuel_efficiency) as avg_fe from cars " ;
-        Connection conn = null ;
-        PreparedStatement pstmt = null ;
-        ResultSet rs = null ;
+        String sql = "select avg(fuel_efficiency) as avg_fe from cars ";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
 
         try {
             conn = super.getConnection();
             pstmt = conn.prepareStatement(sql);
-            rs= pstmt.executeQuery();
+            rs = pstmt.executeQuery();
 
-            if(rs.next()){
+            if (rs.next()) {
                 Car bean = new Car();
 
                 bean.setFuelEfficiency(rs.getInt("avg_fe"));
@@ -322,11 +327,64 @@ public class CarDao extends SuperDao {
                 avgfeList.add(bean);
 
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return avgfeList;
+    }
+
+    public List<Car> dealerCar(String office) {
+        List<Car> officedata = new ArrayList<>();
+        String sql = "select * from cars where office = ?";
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = super.getConnection();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, office);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Car bean = new Car();
+                bean.setCarNumber(rs.getInt("car_no"));
+                bean.setBrand(rs.getString("brand"));
+                bean.setCarModel(rs.getString("car_model"));
+                bean.setReleaseDate(rs.getString("release_date"));
+                bean.setColor(rs.getString("color"));
+                bean.setCarType(rs.getString("car_type"));
+                bean.setEngineType(rs.getString("engine_type"));
+                bean.setFuelEfficiency(rs.getInt("fuel_efficiency"));
+                bean.setPrice(rs.getInt("price"));
+                bean.setOffice(rs.getString("office"));
+
+                officedata.add(bean);
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        } finally {
+            try {
+
+                if (rs != null) {
+                    rs.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+            return officedata;
+        }
     }
 }
 
